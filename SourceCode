@@ -1,0 +1,209 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+int n,m,soMau;
+int dinh[100001];
+int mau[100001];
+int a[10001][10001];
+string rainbow[101];
+
+
+vector <int> ke[100001];
+
+void nhapDuLieu()
+{
+	cin>>n>>m;
+	for (int i=1; i<=m; i++)
+	{
+		int temp1,temp2;
+		cin>>temp1>>temp2; 
+		a[temp1][temp2]=1;
+		ke[temp1].push_back(temp2);
+		ke[temp2].push_back(temp1);
+	}
+}
+int chinhQuyCheck()
+{
+	int check=1;
+	int MAX=ke[1].size();
+	for (int i=1; i<n; i++)
+	{
+		if ( ke[i].size() < ke[i+1].size() )
+		{
+			check=0;
+			MAX=ke[i+1].size();
+		}
+	}
+	if (check) return MAX+1;
+	else return MAX;
+}
+void cauVong()
+{
+    rainbow[0] = "white";
+    rainbow[1] = "grey";
+    rainbow[2] = "red";
+    rainbow[3] = "green";
+    rainbow[4] = "blue";
+    rainbow[5] = "yellow";
+    rainbow[6] = "brown";
+    rainbow[7] = "blueviolet";
+    rainbow[8] = "orange";
+    rainbow[9] = "aliceblue";
+    rainbow[10] = "antiquewhite";
+    rainbow[11] = "cyan";
+    rainbow[12] = "darkolivegreen";
+    rainbow[13] = "dimgray";
+    rainbow[14] = "forestgreen";
+    rainbow[15] = "gold";
+    rainbow[16] = "lightblue";
+    rainbow[17] = "olivedrab";
+    rainbow[18] = "steelblue";
+    rainbow[19] = "magenta";
+    rainbow[20] = "thistle";
+    rainbow[21] = "midnightblue";
+    rainbow[22] = "orangered";
+    rainbow[23] = "forestgreen";
+    rainbow[24] = "indianred";
+    rainbow[25] = "mediumpurple";
+    rainbow[26] = "darkslategray";
+    rainbow[27] = "mediumseagreen";
+    rainbow[28] = "lightcoral";
+    rainbow[29] = "springgreen";
+    rainbow[30] = "skyblue";
+    rainbow[31] = "blue4";
+    rainbow[32] = "bisque4";
+    rainbow[33] = "brown4";
+    rainbow[34] = "burlywood4";
+    rainbow[35] = "cadetblue4";
+    rainbow[36] = "chartreuse4";
+    rainbow[37] = "chocolate4";
+    rainbow[38] = "coral4";
+    rainbow[39] = "cornsilk4";
+    rainbow[40] = "cyan4";
+    rainbow[41] = "darkgoldenrod4";
+    rainbow[42] = "darkolivegreen4";
+    rainbow[43] = "darkorange4";
+    rainbow[44] = "darkorchid4";
+    rainbow[45] = "darkseagreen4";
+    rainbow[46] = "darkslategray4";
+    rainbow[47] = "deeppink4";
+    rainbow[48] = "deepskyblue4";
+    rainbow[49] = "dodgerblue4";
+    rainbow[50] = "firebrick4";
+    rainbow[51] = "goldenrod4";
+    rainbow[52] = "blue3";
+    rainbow[53] = "bisque3";
+    rainbow[54] = "brown3";
+    rainbow[55] = "burlywood3";
+    rainbow[56] = "cadetblue3";
+    rainbow[57] = "chartreuse3";
+    rainbow[58] = "chocolate3";
+    rainbow[59] = "coral3";
+    rainbow[60] = "cornsilk3";
+    rainbow[61] = "cyan3";
+    rainbow[62] = "darkgoldenrod3";
+    rainbow[63] = "darkolivegreen3";
+    rainbow[64] = "darkorange3";
+    rainbow[65] = "darkorchid3";
+    rainbow[66] = "darkseagreen3";
+    rainbow[67] = "darkslategray3";
+    rainbow[68] = "deeppink3";
+    rainbow[69] = "deepskyblue3";
+    rainbow[70] = "dodgerblue3";
+    rainbow[71] = "firebrick3";
+    rainbow[72] = "goldenrod3";
+    rainbow[73] = "blue2";
+    rainbow[74] = "bisque2";
+    rainbow[75] = "brown2";
+    rainbow[76] = "burlywood2";
+    rainbow[77] = "cadetblue2";
+    rainbow[78] = "chartreuse2";
+    rainbow[79] = "chocolate2";
+    rainbow[80] = "coral2";
+    rainbow[81] = "cornsilk2";
+    rainbow[82] = "cyan2";
+    rainbow[83] = "darkgoldenrod2";
+    rainbow[84] = "darkolivegreen2";
+    rainbow[85] = "darkorange2";
+    rainbow[86] = "darkorchid2";
+    rainbow[87] = "darkseagreen2";
+    rainbow[88] = "darkslategray2";
+    rainbow[89] = "deeppink2";
+    rainbow[90] = "deepskyblue2";
+    rainbow[91] = "dodgerblue2";
+    rainbow[92] = "firebrick2";
+    rainbow[93] = "goldenrod2";
+    rainbow[94] = "honeydew4";
+    rainbow[95] = "hotpink4";
+    rainbow[96] = "indianred4";
+    rainbow[97] = "ivory4";
+    rainbow[98] = "khaki4";
+    rainbow[99] = "lavenderblush4";
+    rainbow[100] = "lemonchiffon4";
+}
+
+void greed()
+{
+	for (int i=1; i<=n; i++)
+	{
+		dinh[i]=i;
+	}
+	random_shuffle(dinh+1,dinh+1+n);
+	for (int i=1; i<=n; i++)
+	{
+		int temp=1;
+		int check=0;
+		while (!check)
+		{
+			check=1;
+			mau[i]=temp;
+			for (int j=0; j<ke[i].size(); j++)
+				{
+					if ( temp == mau[ke[i][j]] )
+					{
+						check=0;
+						temp++;
+						break;
+					}
+				}
+			
+		}
+	}
+}
+
+void Max()
+{
+	for (int i=1; i<=n; i++)
+	{
+		if (soMau<mau[i]) soMau=mau[i];
+	}
+}
+
+void xuatDuLieu()
+{
+	cout<<"graph dothi\n{\n";
+	for (int i=1; i<=n; i++)
+	{
+		cout<<"\t"<<i<<" [fillcolor="<<rainbow[mau[i]]<<", style=filled];\n";
+	}
+	for (int i=1; i<=n; i++)
+		for(int j=1; j<=n; j++)
+			if (a[i][j]==1) cout<<i<<"--"<<j<<";\n";
+	cout<<"}";
+}
+main()
+{
+	freopen("a.inp","r",stdin);
+	freopen("dothitomau.dot","w",stdout);
+	nhapDuLieu();
+	cauVong();
+	greed();
+	Max();
+	while (soMau>chinhQuyCheck())
+		greed();
+	xuatDuLieu();
+}
