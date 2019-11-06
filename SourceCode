@@ -197,7 +197,7 @@ void xuatDuLieu()
 }
 main()
 {
-	freopen("a.inp","r",stdin);
+	freopen("dothi.txt","r",stdin);
 	freopen("dothitomau.dot","w",stdout);
 	nhapDuLieu();
 	cauVong();
